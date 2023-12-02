@@ -1,116 +1,146 @@
 public class Figure {
 
-    public void checkingIsFigureValid(String typeOfFigure) {
-        switch (typeOfFigure) {
-            case "Rectangle":
+    public static boolean checkingIsFigureValid(String typeOfFigure) {
+        NameOfFigures nameOfFigures = NameOfFigures.valueOf(typeOfFigure);
+        switch (nameOfFigures) {
+            case RECTANGLE:
                 if (Rectangle.isRectangleValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Parallelogram":
+            case PARALLELOGRAM:
                 if (Parallelogram.isParallelogramValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Triangle":
+            case TRIANGLE:
                 if (Triangle.isTriangleValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Square":
+            case SQUARE:
                 if (Square.isSquareValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Circle":
+            case CIRCLE:
                 if (Circle.isCircleValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Sphere":
+            case SPHERE:
                 if (Sphere.isSphereValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Cone":
+            case CONE:
                 if (Cone.isConeValid()) {
                     System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
-            case "Figure":
+            case FIGURE:
                 System.out.println("The figure is figure");
-                break;
-            case "Cylinder":
+                return true;
+            case CYLINDER:
                 if (Cylinder.isCylinderValid()) {
                     System.out.println("The figure is valid");
+                    return true;
+                } else {
+                    System.out.println("The figure is invalid");
+                }
+                break;
+            case TRUNCATED_SPHERE:
+                if (TruncatedSphere.isTruncatedSphereValid()) {
+                    System.out.println("The figure is valid");
+                    return true;
                 } else {
                     System.out.println("The figure is invalid");
                 }
                 break;
         }
+        return false;
     }
 
-    public void countingAreaOfFigure(String typeOfFigure) {
-        switch (typeOfFigure) {
-            case "Rectangle":
+    public static void countingAreaOfFigure(String typeOfFigure) {
+        NameOfFigures nameOfFigures = NameOfFigures.valueOf(typeOfFigure);
+        switch (nameOfFigures) {
+            case RECTANGLE:
                 System.out.printf("The figure area %.2f", Rectangle.countingOfRectangleArea());
                 break;
-            case "Parallelogram":
-                System.out.printf("The figure area %.2f",Parallelogram.countingParallelogramArea());
+            case PARALLELOGRAM:
+                System.out.printf("The figure area %.2f", Parallelogram.countingParallelogramArea());
                 break;
-            case "Triangle":
-                System.out.printf("The figure area %.2f",Triangle.countingAreaOfTriangle());
+            case TRIANGLE:
+                System.out.printf("The figure area %.2f", Triangle.countingAreaOfTriangle());
                 break;
-            case "Square":
-                System.out.printf("The figure area %.2f",Square.countingAreaOfSquare());
+            case SQUARE:
+                System.out.printf("The figure area %.2f", Square.countingAreaOfSquare());
                 break;
-            case "Circle":
+            case CIRCLE:
                 System.out.printf("The figure area %.2f", Circle.countingCircleArea());
                 break;
-            case "Sphere":
+            case SPHERE:
                 System.out.printf("The figure area %.2f", Sphere.countingAreaOfSphere());
                 break;
-            case "Cone":
+            case CONE:
                 System.out.printf("The figure area %.2f", Cone.countingAreaOfCone());
                 break;
-            case "Figure":
+            case FIGURE:
                 System.out.println("The figure has no area");
                 break;
+            case TRUNCATED_SPHERE:
+                System.out.printf("The figure area %.2f", TruncatedSphere.countingTruncatedSphereArea());
+                break;
+            case CYLINDER:
+                System.out.printf("The figure area %.2f", Cylinder.countingCylinderArea());
+                break;
+            case POLYGON:
+                System.out.printf("The figure area %.2f", Polygon.countingAreaOfPolygon());
+                break;
         }
+        System.out.println("");
     }
 
-    public void countingPerimeterOfFigure(String typeOfFigure) {
-        switch (typeOfFigure) {
-            case "Rectangle":
+    public static void countingPerimeterOfFigure(String typeOfFigure) {
+        NameOfFigures nameOfFigures = NameOfFigures.valueOf(typeOfFigure);
+        switch (nameOfFigures) {
+            case RECTANGLE:
                 System.out.printf("The figure perimeter %.2f", Rectangle.countingOfRectanglePerimeter());
                 break;
-            case "Circle":
+            case CIRCLE:
                 System.out.printf("The figure perimeter %.2f", Circle.countingCirclePerimeter());
                 break;
-            case "Parallelogram":
+            case PARALLELOGRAM:
                 System.out.printf("The figure perimeter %.2f", Parallelogram.countingParallelogramPerimeter());
                 break;
-            case "Square":
+            case SQUARE:
                 System.out.printf("The figure perimeter %.2f", Square.countingPerimeterOfSquare());
                 break;
-            case "Triangle":
+            case TRIANGLE:
                 System.out.printf("The figure perimeter %.2f", Triangle.countingPerimeterOfTriangle());
                 break;
-            case "Figure":
+            case FIGURE:
                 System.out.printf("The figure has no perimeter");
                 break;
         }
