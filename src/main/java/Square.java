@@ -9,10 +9,10 @@ public class Square extends Figure {
     }
 
     public static boolean isSquareValid() {
-        Point firstPoint = points.get(0);
-        Point secondPoint = points.get(1);
-        Point thirdpoint = points.get(2);
-        Point fourthPoint = points.get(3);
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
+        Point thirdpoint = points.get(Constants.THIRD_POINT_INDEX);
+        Point fourthPoint = points.get(Constants.FOURTH_POINT_INDEX);
 
         double AB = distanceBetweenPoints(firstPoint, secondPoint);
         double BC = distanceBetweenPoints(secondPoint, thirdpoint);
@@ -25,21 +25,21 @@ public class Square extends Figure {
     }
 
     public static double countingAreaOfSquare() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
 
-        double S = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                    + Math.pow(firstSide.getY() - secondSide.getY(), 2));
+        double S = Math.sqrt(Math.pow(firstPoint.getX() - secondPoint.getX(), 2)
+                    + Math.pow(firstPoint.getY() - secondPoint.getY(), 2));
 
         return Math.pow(S, 2);
     }
 
     public static double countingPerimeterOfSquare() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
 
-        double perimeter = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                + Math.pow(firstSide.getY() - secondSide.getY(), 2)) * 4;
+        double perimeter = Math.sqrt(Math.pow(firstPoint.getX() - secondPoint.getX(), 2)
+                + Math.pow(firstPoint.getY() - secondPoint.getY(), 2)) * Constants.AMOUNT_OF_SQUARE_SIDES;
 
         return perimeter;
     }

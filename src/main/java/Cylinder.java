@@ -10,9 +10,9 @@ public class Cylinder extends  Figure {
     }
 
     public static boolean isCylinderValid() {
-        Point centerOfBase = points.get(0);
-        Point firstPointOnCircle = points.get(1);
-        Point secondPointOnCircle = points.get(2);
+        Point centerOfBase = points.get(Constants.FIRST_POINT_INDEX);
+        Point firstPointOnCircle = points.get(Constants.SECOND_POINT_INDEX);
+        Point secondPointOnCircle = points.get(Constants.THIRD_POINT_INDEX);
 
         int angleBetweenVectorsInUpperPlane = (firstPointOnCircle.getX() - centerOfBase.getX())
                 * (secondPointOnCircle.getX() - firstPointOnCircle.getX())
@@ -59,7 +59,6 @@ public class Cylinder extends  Figure {
     }
 
     public static double countingCylinderArea() {
-        double S = 2 * Math.PI * radiusOfBase * (cylinderHeight + radiusOfBase);
-        return S;
+        return Constants.NUM_TWO_RADIUS_OF_CIRCLE * Math.PI * radiusOfBase * (cylinderHeight + radiusOfBase);
     }
 }

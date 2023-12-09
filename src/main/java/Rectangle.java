@@ -50,7 +50,7 @@ public class Rectangle extends Figure {
 
     public static double countingOfRectanglePerimeter() {
         Point firstSide = points.get(Constants.FIRST_POINT_INDEX);
-        Point secondSide = points.get(1);
+        Point secondSide = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdSide = points.get(Constants.THIRD_POINT_INDEX);
 
         double sizeOfLeftSideOfRectangle = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
@@ -61,7 +61,7 @@ public class Rectangle extends Figure {
                 + Math.pow(secondSide.getY() - thirdSide.getY(), 2)
                 + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
 
-        return (sizeOfLeftSideOfRectangle + sizeOfUpperSideOfRectangle) * 2;
+        return (sizeOfLeftSideOfRectangle + sizeOfUpperSideOfRectangle) * Constants.TWO_PAIRED_SIDES;
     }
 
     private static double distanceBetweenPoints(Point p, Point q) {

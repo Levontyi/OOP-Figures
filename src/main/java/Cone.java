@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.CompletionStage;
 
 public class Cone extends  Figure {
     private static ArrayList<Point> points;
@@ -10,9 +11,9 @@ public class Cone extends  Figure {
     }
 
     public static boolean isConeValid() {
-        Point center = points.get(0);
-        Point pointOnBase = points.get(1);
-        Point topOfCone = points.get(2);
+        Point center = points.get(Constants.FIRST_POINT_INDEX);
+        Point pointOnBase = points.get(Constants.SECOND_POINT_INDEX);
+        Point topOfCone = points.get(Constants.THIRD_POINT_INDEX);
 
         radiusOfBaseOfCone = Math.sqrt(Math.pow(pointOnBase.getX() - center.getX(), 2)
                 + Math.pow(pointOnBase.getY() - pointOnBase.getY(), 2) + Math.pow(pointOnBase.getZ() - center.getZ(), 2));

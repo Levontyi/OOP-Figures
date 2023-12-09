@@ -9,10 +9,10 @@ public class Parallelogram extends Figure {
     }
 
     public static boolean isParallelogramValid() {
-        Point firstPoint = points.get(0);
-        Point secondPoint = points.get(1);
-        Point thirdPoint = points.get(2);
-        Point fourthPoint = points.get(3);
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
+        Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
+        Point fourthPoint = points.get(Constants.FOURTH_POINT_INDEX);
 
         double AB = distanceBetweenPoints(firstPoint, secondPoint);
         double BC = distanceBetweenPoints(secondPoint, thirdPoint);
@@ -33,10 +33,9 @@ public class Parallelogram extends Figure {
     }
 
     public static double countingParallelogramArea() {
-        Point firstPoint = points.get(0);
-        Point secondPoint = points.get(1);
-        Point thirdPoint = points.get(2);
-
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
+        Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
 
         double AB = Math.sqrt(Math.pow(firstPoint.getX() - secondPoint.getX(), 2)
                 + Math.pow(firstPoint.getY() - secondPoint.getY(), 2))
@@ -65,18 +64,18 @@ public class Parallelogram extends Figure {
     }
 
     public static double countingParallelogramPerimeter() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
+        Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
 
-        double AB = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                + Math.pow(firstSide.getY() - secondSide.getY(), 2))
-                + Math.pow(firstSide.getZ() - secondSide.getZ(), 2);
-        double BC = Math.sqrt(Math.pow(secondSide.getX() - thirdSide.getX(), 2)
-                + Math.pow(secondSide.getY() - thirdSide.getY(), 2)
-                + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
+        double AB = Math.sqrt(Math.pow(firstPoint.getX() - secondPoint.getX(), 2)
+                + Math.pow(firstPoint.getY() - secondPoint.getY(), 2))
+                + Math.pow(firstPoint.getZ() - secondPoint.getZ(), 2);
+        double BC = Math.sqrt(Math.pow(secondPoint.getX() - thirdPoint.getX(), 2)
+                + Math.pow(secondPoint.getY() - thirdPoint.getY(), 2)
+                + Math.pow(secondPoint.getZ() - thirdPoint.getZ(), 2));
 
-        return (AB + BC) * 2;
+        return (AB + BC) * Constants.TWO_PAIRED_SIDES;
     }
 
     private static double distanceBetweenPoints(Point p, Point q) {

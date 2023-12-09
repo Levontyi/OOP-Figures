@@ -32,7 +32,7 @@ public class Triangle extends Figure {
 
         boolean vectorsNotCollinear = (firstVectorY * secondVectorZ - firstVectorZ * secondVectorY)
                 - (firstVectorX * secondVectorZ - firstVectorZ * secondVectorX)
-                - (firstVectorX * secondVectorY - firstVectorY * secondVectorX) != 0;
+                - (firstVectorX * secondVectorY - firstVectorY * secondVectorX) != Constants.SCALAR_PRODUCT;
 
         return  (lengthFirstSideOfTriangle + lengthSecondSideOfTriangle > lengthThirdSideOfTriangle)
                 && (lengthFirstSideOfTriangle + lengthThirdSideOfTriangle > lengthSecondSideOfTriangle)
