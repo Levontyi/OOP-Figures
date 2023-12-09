@@ -11,8 +11,8 @@ public class Sphere extends Figure {
         Point center = points.get(0);
         Point pointOnSphere = points.get(1);
 
-        if (center.getX() == pointOnSphere.getX() && center.getY()
-                == pointOnSphere.getY() && center.getZ() == pointOnSphere.getZ()) {
+        if (center.getX() == pointOnSphere.getX() && center.getY() == pointOnSphere.getY()
+                && center.getZ() == pointOnSphere.getZ()) {
             return false;
         } else {
             return true;

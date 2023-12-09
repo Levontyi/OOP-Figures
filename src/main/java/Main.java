@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main {
 
     static String chosenFigure = null;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -11,18 +12,16 @@ public class Main {
         ArrayList<Point> points = enteringCoordinates(scanner);
         creatingFigure(chosenFigure, points);
 
-        Figure.checkingIsFigureValid(chosenFigure);
-        Figure.countingAreaOfFigure(chosenFigure);
-        Figure.countingPerimeterOfFigure(chosenFigure);
-
+        if (Figure.checkingIsFigureValid(chosenFigure)) {
+            Figure.countingAreaOfFigure(chosenFigure);
+            Figure.countingPerimeterOfFigure(chosenFigure);
+        }
     }
 
     public static void enteringFigure(Scanner scanner) {
-
-        NameOfFigures nameOfFigures;
-
         String nameOfFigure = scanner.nextLine();
-        nameOfFigures = NameOfFigures.valueOf(nameOfFigure);
+        NameOfFigures nameOfFigures = NameOfFigures.valueOf(nameOfFigure);
+
         if (nameOfFigure.equals("END")) {
             System.exit(0);
         } else {
@@ -88,14 +87,13 @@ public class Main {
 
             int coordinateX = Integer.parseInt(coordinates[0]);
             int coordinateY = Integer.parseInt(coordinates[1]);
+            int coordinateZ = 0;
 
-            if (coordinates.length == 2) {
-                point.add(new Point(coordinateX, coordinateY));
-            } else if (coordinates.length == 3) {
-                int coordinateZ = Integer.parseInt(coordinates[2]);
-                point.add(new Point(coordinateX, coordinateY, coordinateZ));
+            if (coordinates.length == 3) {
+                coordinateZ = Integer.parseInt(coordinates[2]);
             }
 
+            point.add(new Point(coordinateX, coordinateY, coordinateZ));
         }
 
         return point;
@@ -103,6 +101,7 @@ public class Main {
 
     public static void creatingFigure(String nameOfFigure, ArrayList<Point> points) {
         NameOfFigures nameOfFigures = NameOfFigures.valueOf(nameOfFigure);
+
         for (int i = 0; i < points.size(); i++) {
             switch (nameOfFigures) {
                 case CONE:

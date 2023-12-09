@@ -4,43 +4,64 @@ public class Parallelogram extends Figure {
 
     private static ArrayList<Point> points;
 
-    private static final double ZERO_POINT_FIVE = 0.5;
-
     public Parallelogram(ArrayList<Point> points) {
         this.points = points;
     }
 
     public static boolean isParallelogramValid() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
+        Point firstPoint = points.get(0);
+        Point secondPoint = points.get(1);
+        Point thirdPoint = points.get(2);
+        Point fourthPoint = points.get(3);
 
-        int vectorOfFirstSideOnX = secondSide.getX() - firstSide.getX();
-        int vectorOfFirstSideOnY = secondSide.getY() - firstSide.getY();
+        double AB = distanceBetweenPoints(firstPoint, secondPoint);
+        double BC = distanceBetweenPoints(secondPoint, thirdPoint);
+        double CD = distanceBetweenPoints(thirdPoint, fourthPoint);
+        double AD = distanceBetweenPoints(fourthPoint, firstPoint);
 
-        int vectorOfSecondSideOnX = thirdSide.getX() - firstSide.getX();
-        int vectorOfSecondSideOnY = thirdSide.getY() - firstSide.getY();
+        if (AB == CD && BC == AD) {
+            return countingVectorCoordinates(firstPoint.getX(), secondPoint.getX())
+                    * countingVectorCoordinates(secondPoint.getX(), thirdPoint.getX())
+                    + countingVectorCoordinates(firstPoint.getY(), secondPoint.getY())
+                    * countingVectorCoordinates(secondPoint.getY(), thirdPoint.getY())
+                    + countingVectorCoordinates(firstPoint.getZ(), secondPoint.getZ())
+                    * countingVectorCoordinates(secondPoint.getZ(), thirdPoint.getZ()) != 0;
 
-        boolean isValid = (vectorOfFirstSideOnX / vectorOfSecondSideOnX)
-                    != (vectorOfFirstSideOnY / vectorOfSecondSideOnY);
-
-
-        return isValid;
+        } else {
+            return false;
+        }
     }
 
     public static double countingParallelogramArea() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
-        Point fourthSide = points.get(3);
+        Point firstPoint = points.get(0);
+        Point secondPoint = points.get(1);
+        Point thirdPoint = points.get(2);
 
-        double AC = Math.sqrt(Math.pow(firstSide.getX() - thirdSide.getX(), 2)
-                + Math.pow(firstSide.getY() - thirdSide.getY(), 2))
-                + Math.pow(firstSide.getZ() - thirdSide.getZ(), 2);
-        double BD = Math.sqrt(Math.pow(secondSide.getX() - fourthSide.getX(), 2)
-                + Math.pow(secondSide.getY() - fourthSide.getY(), 2)
-                + Math.pow(secondSide.getZ() - fourthSide.getZ(), 2));
-        return ZERO_POINT_FIVE * AC * BD;
+
+        double AB = Math.sqrt(Math.pow(firstPoint.getX() - secondPoint.getX(), 2)
+                + Math.pow(firstPoint.getY() - secondPoint.getY(), 2))
+                + Math.pow(firstPoint.getZ() - secondPoint.getZ(), 2);
+        double BC = Math.sqrt(Math.pow(secondPoint.getX() - thirdPoint.getX(), 2)
+                + Math.pow(secondPoint.getY() - thirdPoint.getY(), 2)
+                + Math.pow(secondPoint.getZ() - thirdPoint.getZ(), 2));
+
+        double vectorProduct = countingVectorCoordinates(firstPoint.getX(), secondPoint.getX())
+                * countingVectorCoordinates(secondPoint.getX(), thirdPoint.getX())
+                + countingVectorCoordinates(firstPoint.getY(), secondPoint.getY())
+                * countingVectorCoordinates(secondPoint.getY(), thirdPoint.getY())
+                + countingVectorCoordinates(firstPoint.getZ(), secondPoint.getZ())
+                * countingVectorCoordinates(secondPoint.getZ(), thirdPoint.getZ());
+
+        double scalarProduct = Math.sqrt(Math.pow(firstPoint.getX() - secondPoint.getX(), 2) + Math.pow(firstPoint.getY()
+                - secondPoint.getY(), 2) + Math.pow(firstPoint.getZ() - secondPoint.getZ(), 2))
+                * Math.sqrt(Math.pow(secondPoint.getX() - thirdPoint.getX(), 2)
+                + Math.pow(secondPoint.getY() - thirdPoint.getY(), 2)
+                + Math.pow(secondPoint.getZ() - thirdPoint.getZ(), 2));
+
+        double sine = Math.sqrt(1 - Math.pow(vectorProduct / scalarProduct, 2));
+
+        return AB * BC * sine;
+
     }
 
     public static double countingParallelogramPerimeter() {
@@ -56,5 +77,13 @@ public class Parallelogram extends Figure {
                 + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
 
         return (AB + BC) * 2;
+    }
+
+    private static double distanceBetweenPoints(Point p, Point q) {
+        return Math.sqrt(Math.pow(p.getX() - q.getX(), 2) + Math.pow(p.getY() - q.getY(), 2) + Math.pow(p.getZ() - q.getZ(), 2));
+    }
+
+    private static int countingVectorCoordinates(int point1, int point2) {
+        return point2 - point1;
     }
 }

@@ -11,37 +11,33 @@ public class Triangle extends Figure {
     }
 
     public static boolean isTriangleValid() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
+        Point firstPoint = points.get(0);
+        Point secondPoint = points.get(1);
+        Point thirdPoint = points.get(2);
 
+        lengthFirstSideOfTriangle = Math.sqrt(Math.pow(secondPoint.getX() - firstPoint.getX(), 2)
+                + Math.pow(secondPoint.getY() - firstPoint.getY(), 2) + Math.pow(secondPoint.getZ() - firstPoint.getZ(), 2));
+        lengthSecondSideOfTriangle = Math.sqrt(Math.pow(thirdPoint.getX() - firstPoint.getX(), 2)
+                + Math.pow(thirdPoint.getY() - firstPoint.getY(), 2) + Math.pow(thirdPoint.getZ() - firstPoint.getZ(), 2));
+        lengthThirdSideOfTriangle = Math.sqrt(Math.pow(thirdPoint.getX() - secondPoint.getX(), 2)
+                + Math.pow(thirdPoint.getY() - secondPoint.getY(), 2) + Math.pow(thirdPoint.getZ() - secondPoint.getZ(), 2));
 
-        lengthFirstSideOfTriangle = Math.sqrt(Math.pow(secondSide.getX() - firstSide.getX(), 2)
-                + Math.pow(secondSide.getY() - firstSide.getY(), 2));
-        lengthSecondSideOfTriangle = Math.sqrt(Math.pow(thirdSide.getX() - firstSide.getX(), 2)
-                + Math.pow(thirdSide.getY() - firstSide.getY(), 2));
-        lengthThirdSideOfTriangle = Math.sqrt(Math.pow(thirdSide.getX() - secondSide.getX(), 2)
-                + Math.pow(thirdSide.getY() - secondSide.getY(), 2));
+        int firstVectorX = secondPoint.getX() - firstPoint.getX();
+        int firstVectorY = secondPoint.getY() - firstPoint.getY();
+        int firstVectorZ = secondPoint.getZ() - firstPoint.getZ();
 
-        boolean isValid = (lengthFirstSideOfTriangle + lengthSecondSideOfTriangle > lengthThirdSideOfTriangle)
+        int secondVectorX = thirdPoint.getX() - firstPoint.getX();
+        int secondVectorY = thirdPoint.getY() - firstPoint.getY();
+        int secondVectorZ = thirdPoint.getZ() - firstPoint.getZ();
+
+        boolean vectorsNotCollinear = (firstVectorY * secondVectorZ - firstVectorZ * secondVectorY)
+                - (firstVectorX * secondVectorZ - firstVectorZ * secondVectorX)
+                - (firstVectorX * secondVectorY - firstVectorY * secondVectorX) != 0;
+
+        return  (lengthFirstSideOfTriangle + lengthSecondSideOfTriangle > lengthThirdSideOfTriangle)
                 && (lengthFirstSideOfTriangle + lengthThirdSideOfTriangle > lengthSecondSideOfTriangle)
-                && (lengthSecondSideOfTriangle + lengthThirdSideOfTriangle > lengthFirstSideOfTriangle);
-        try {
-             firstSide.getZ();
-        } finally {
-            lengthFirstSideOfTriangle = Math.sqrt(Math.pow(secondSide.getX() - firstSide.getX(), 2)
-                    + Math.pow(secondSide.getY() - firstSide.getY(), 2) + Math.pow(secondSide.getZ() - firstSide.getZ(), 2));
-            lengthSecondSideOfTriangle = Math.sqrt(Math.pow(thirdSide.getX() - firstSide.getX(), 2)
-                    + Math.pow(thirdSide.getY() - firstSide.getY(), 2) + Math.pow(thirdSide.getZ() - firstSide.getZ(), 2));
-            lengthThirdSideOfTriangle = Math.sqrt(Math.pow(thirdSide.getX() - secondSide.getX(), 2)
-                    + Math.pow(thirdSide.getY() - secondSide.getY(), 2) + Math.pow(thirdSide.getZ() - secondSide.getZ(), 2));
-
-            isValid = (lengthFirstSideOfTriangle + lengthSecondSideOfTriangle > lengthThirdSideOfTriangle)
-                    && (lengthFirstSideOfTriangle + lengthThirdSideOfTriangle > lengthSecondSideOfTriangle)
-                    && (lengthSecondSideOfTriangle + lengthThirdSideOfTriangle > lengthFirstSideOfTriangle);
-        }
-
-        return isValid;
+                && (lengthSecondSideOfTriangle + lengthThirdSideOfTriangle > lengthFirstSideOfTriangle)
+                && vectorsNotCollinear;
     }
 
     public static double countingAreaOfTriangle() {

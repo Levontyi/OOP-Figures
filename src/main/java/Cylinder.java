@@ -20,13 +20,23 @@ public class Cylinder extends  Figure {
                 * (secondPointOnCircle.getY() - firstPointOnCircle.getY())
                 + (firstPointOnCircle.getZ() - centerOfBase.getZ())
                 * (secondPointOnCircle.getZ() - firstPointOnCircle.getZ());
-        int angleBetweenVectorsInLowerPlane = (centerOfBase.getX() - firstPointOnCircle.getX()) * (secondPointOnCircle.getX() - centerOfBase.getX()) + (centerOfBase.getY() - firstPointOnCircle.getY()) * (secondPointOnCircle.getY() - centerOfBase.getY()) + (centerOfBase.getZ() - firstPointOnCircle.getZ()) * (secondPointOnCircle.getZ() - centerOfBase.getZ()); //Нижняя плоскость
-        double height = Math.sqrt(Math.pow(firstPointOnCircle.getX() - centerOfBase.getX(), 2) + Math.pow(firstPointOnCircle.getY() - centerOfBase.getY(), 2) + Math.pow(firstPointOnCircle.getZ() - centerOfBase.getZ(), 2));
+
+        int angleBetweenVectorsInLowerPlane = (centerOfBase.getX() - firstPointOnCircle.getX())
+                * (secondPointOnCircle.getX() - centerOfBase.getX()) + (centerOfBase.getY() - firstPointOnCircle.getY())
+                * (secondPointOnCircle.getY() - centerOfBase.getY()) + (centerOfBase.getZ() - firstPointOnCircle.getZ())
+                * (secondPointOnCircle.getZ() - centerOfBase.getZ());
+
+        double height = Math.sqrt(Math.pow(firstPointOnCircle.getX() - centerOfBase.getX(), 2)
+                + Math.pow(firstPointOnCircle.getY() - centerOfBase.getY(), 2)
+                + Math.pow(firstPointOnCircle.getZ() - centerOfBase.getZ(), 2));
+
         cylinderHeight = height;
         double radius;
 
         if (angleBetweenVectorsInUpperPlane == 0) {
-            radius = Math.sqrt(Math.pow(firstPointOnCircle.getX() - secondPointOnCircle.getX(), 2) + Math.pow(firstPointOnCircle.getY() - secondPointOnCircle.getY(), 2) + Math.pow(firstPointOnCircle.getZ() - secondPointOnCircle.getZ(), 2));
+            radius = Math.sqrt(Math.pow(firstPointOnCircle.getX() - secondPointOnCircle.getX(), 2)
+                    + Math.pow(firstPointOnCircle.getY() - secondPointOnCircle.getY(), 2)
+                    + Math.pow(firstPointOnCircle.getZ() - secondPointOnCircle.getZ(), 2));
             radiusOfBase = radius;
 
             if (radius > 0 && height > 0) {

@@ -4,85 +4,71 @@ public class Rectangle extends Figure {
 
     private static ArrayList<Point> points;
 
+
     public Rectangle(ArrayList<Point> points) {
         this.points = points;
     }
 
     public static boolean isRectangleValid() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
-        Point fourthSide = points.get(3);
+        Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
+        Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
+        Point fourthPoint = points.get(Constants.FOURTH_POINT_INDEX);
 
-        int xSizeOfFirstSide = Math.abs(firstSide.getX() - secondSide.getX());
-        int ySizeOfFirstSide = Math.abs(firstSide.getY() - secondSide.getY());
-        int xSizeOfSecondSide = Math.abs(thirdSide.getX() - fourthSide.getX());
-        int ySizeOfSecondSide = Math.abs(thirdSide.getY() - fourthSide.getY());
+        double AB = distanceBetweenPoints(firstPoint, secondPoint);
+        double BC = distanceBetweenPoints(secondPoint, thirdPoint);
+        double CD = distanceBetweenPoints(thirdPoint, fourthPoint);
+        double AD = distanceBetweenPoints(fourthPoint, firstPoint);
 
-        boolean isValid = (xSizeOfFirstSide == xSizeOfSecondSide) && (ySizeOfFirstSide == ySizeOfSecondSide)
-                    && ((xSizeOfFirstSide * ySizeOfFirstSide) != 0);
-        try {
-            firstSide.getZ();
-        } finally {
-            int zSizeOfFirstSide = Math.abs(firstSide.getZ() - secondSide.getZ());
-            int zSizeOfSecondSide = Math.abs(thirdSide.getZ() - fourthSide.getZ());
-            isValid = (xSizeOfFirstSide == xSizeOfSecondSide) && (ySizeOfFirstSide == ySizeOfSecondSide)
-                    && (zSizeOfFirstSide == zSizeOfSecondSide)
-                    && ((xSizeOfFirstSide * ySizeOfFirstSide * zSizeOfFirstSide) != 0);
+        if (AB == CD && BC == AD) {
+            return countingVectorCoordinates(firstPoint.getX(), secondPoint.getX())
+                    * countingVectorCoordinates(secondPoint.getX(), thirdPoint.getX())
+                    + countingVectorCoordinates(firstPoint.getY(), secondPoint.getY())
+                    * countingVectorCoordinates(secondPoint.getY(), thirdPoint.getY())
+                    + countingVectorCoordinates(firstPoint.getZ(), secondPoint.getZ())
+                    * countingVectorCoordinates(secondPoint.getZ(), thirdPoint.getZ()) == Constants.SCALAR_PRODUCT;
+        } else {
+            return false;
         }
-        return isValid;
     }
 
     public static double countingOfRectangleArea() {
-        Point firstSide = points.get(0);
-        Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
-        Point fourthSide = points.get(3);
+        Point firstSide = points.get(Constants.FIRST_POINT_INDEX);
+        Point secondSide = points.get(Constants.SECOND_POINT_INDEX);
+        Point thirdSide = points.get(Constants.THIRD_POINT_INDEX);
 
         double sizeOfLeftSideOfRectangle = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                + Math.pow(firstSide.getY() - secondSide.getY(), 2));
+                + Math.pow(firstSide.getY() - secondSide.getY(), 2)
+                + Math.pow(firstSide.getZ() - secondSide.getZ(), 2));
 
         double sizeOfUpperSideOfRectangle = Math.sqrt(Math.pow(secondSide.getX() - thirdSide.getX(), 2)
-                + Math.pow(secondSide.getY() - thirdSide.getY(), 2));
-        try {
-            firstSide.getZ();
-        } finally {
-            sizeOfLeftSideOfRectangle = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                    + Math.pow(firstSide.getY() - secondSide.getY(), 2)
-                    + Math.pow(firstSide.getZ() - secondSide.getZ(), 2));
-
-            sizeOfUpperSideOfRectangle = Math.sqrt(Math.pow(secondSide.getX() - thirdSide.getX(), 2)
-                    + Math.pow(secondSide.getY() - thirdSide.getY(), 2)
-                    + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
-
-        }
+                + Math.pow(secondSide.getY() - thirdSide.getY(), 2)
+                + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
 
         return sizeOfLeftSideOfRectangle * sizeOfUpperSideOfRectangle;
     }
 
     public static double countingOfRectanglePerimeter() {
-        Point firstSide = points.get(0);
+        Point firstSide = points.get(Constants.FIRST_POINT_INDEX);
         Point secondSide = points.get(1);
-        Point thirdSide = points.get(2);
-        Point fourthSide = points.get(3);
+        Point thirdSide = points.get(Constants.THIRD_POINT_INDEX);
 
         double sizeOfLeftSideOfRectangle = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                + Math.pow(firstSide.getY() - secondSide.getY(), 2));
+                + Math.pow(firstSide.getY() - secondSide.getY(), 2)
+                + Math.pow(firstSide.getZ() - secondSide.getZ(), 2));
 
         double sizeOfUpperSideOfRectangle = Math.sqrt(Math.pow(secondSide.getX() - thirdSide.getX(), 2)
-                + Math.pow(secondSide.getY() - thirdSide.getY(), 2));
-        try {
-            firstSide.getZ();
-        } finally {
-            sizeOfLeftSideOfRectangle = Math.sqrt(Math.pow(firstSide.getX() - secondSide.getX(), 2)
-                    + Math.pow(firstSide.getY() - secondSide.getY(), 2)
-                    + Math.pow(firstSide.getZ() - secondSide.getZ(), 2));
-
-            sizeOfUpperSideOfRectangle = Math.sqrt(Math.pow(secondSide.getX() - thirdSide.getX(), 2)
-                    + Math.pow(secondSide.getY() - thirdSide.getY(), 2)
-                    + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
-        }
+                + Math.pow(secondSide.getY() - thirdSide.getY(), 2)
+                + Math.pow(secondSide.getZ() - thirdSide.getZ(), 2));
 
         return (sizeOfLeftSideOfRectangle + sizeOfUpperSideOfRectangle) * 2;
+    }
+
+    private static double distanceBetweenPoints(Point p, Point q) {
+        return Math.sqrt(Math.pow(p.getX() - q.getX(), 2) + Math.pow(p.getY() - q.getY(), 2) + Math.pow(p.getZ() - q.getZ(), 2));
+    }
+
+    private static int countingVectorCoordinates(int point1, int point2) {
+        return point2 - point1;
     }
 }

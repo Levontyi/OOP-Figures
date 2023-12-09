@@ -32,8 +32,6 @@ public class Cone extends  Figure {
 
     public static double countingAreaOfCone() {
         double lineOnSideOfCone = Math.sqrt(Math.pow(radiusOfBaseOfCone, 2) + Math.pow(height, 2));
-        double S = Math.PI * radiusOfBaseOfCone * (radiusOfBaseOfCone + lineOnSideOfCone);
-
-        return S;
+        return Math.PI * radiusOfBaseOfCone * (radiusOfBaseOfCone + lineOnSideOfCone);
     }
 }

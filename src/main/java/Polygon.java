@@ -28,7 +28,7 @@ public class Polygon extends Figure {
     public static double countingAreaOfPolygon() {
         double area = 0;
 
-        final  int TWO = 2;
+        final int TWO = 2;
         final int ONE = 1;
         final int THREE = 3;
         final double ZERO_AND_FIVE = 0.5;

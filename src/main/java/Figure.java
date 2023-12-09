@@ -78,6 +78,14 @@ public class Figure {
                     System.out.println("The figure is invalid");
                 }
                 break;
+            case POLYGON:
+                if (Polygon.isPolygonValid()) {
+                    System.out.println("The figure is valid");
+                    return true;
+                } else {
+                    System.out.println("The figure is invalid");
+                }
+                break;
         }
         return false;
     }
