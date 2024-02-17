@@ -1,15 +1,17 @@
+import constants.Constants;
+
 import java.util.ArrayList;
 
 public class Rectangle extends Figure {
 
-    private static ArrayList<Point> points;
-
+    private final ArrayList<Point> points;
 
     public Rectangle(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public static boolean isRectangleValid() {
+    @Override
+    public boolean isFigureValid() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
@@ -32,7 +34,8 @@ public class Rectangle extends Figure {
         }
     }
 
-    public static double countingOfRectangleArea() {
+    @Override
+    public double countingFigureArea() {
         Point firstSide = points.get(Constants.FIRST_POINT_INDEX);
         Point secondSide = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdSide = points.get(Constants.THIRD_POINT_INDEX);
@@ -48,7 +51,8 @@ public class Rectangle extends Figure {
         return sizeOfLeftSideOfRectangle * sizeOfUpperSideOfRectangle;
     }
 
-    public static double countingOfRectanglePerimeter() {
+    @Override
+    public double countingFigurePerimeter() {
         Point firstSide = points.get(Constants.FIRST_POINT_INDEX);
         Point secondSide = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdSide = points.get(Constants.THIRD_POINT_INDEX);

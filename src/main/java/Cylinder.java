@@ -1,64 +1,52 @@
+import constants.Constants;
+
 import java.util.ArrayList;
 
-public class Cylinder extends  Figure {
+public class Cylinder extends Figure {
+    private final ArrayList<Point> points;
 
-    private static ArrayList<Point> points;
-    private static double radiusOfBase;
-    private static double cylinderHeight;
+    private Point baseCenter;
+
+    private Point pointOnBaseCircle;
+
+    private Point topCenter;
+
     public Cylinder(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public static boolean isCylinderValid() {
-        Point centerOfBase = points.get(Constants.FIRST_POINT_INDEX);
-        Point firstPointOnCircle = points.get(Constants.SECOND_POINT_INDEX);
-        Point secondPointOnCircle = points.get(Constants.THIRD_POINT_INDEX);
-
-        int angleBetweenVectorsInUpperPlane = (firstPointOnCircle.getX() - centerOfBase.getX())
-                * (secondPointOnCircle.getX() - firstPointOnCircle.getX())
-                + (firstPointOnCircle.getY() - centerOfBase.getY())
-                * (secondPointOnCircle.getY() - firstPointOnCircle.getY())
-                + (firstPointOnCircle.getZ() - centerOfBase.getZ())
-                * (secondPointOnCircle.getZ() - firstPointOnCircle.getZ());
-
-        int angleBetweenVectorsInLowerPlane = (centerOfBase.getX() - firstPointOnCircle.getX())
-                * (secondPointOnCircle.getX() - centerOfBase.getX()) + (centerOfBase.getY() - firstPointOnCircle.getY())
-                * (secondPointOnCircle.getY() - centerOfBase.getY()) + (centerOfBase.getZ() - firstPointOnCircle.getZ())
-                * (secondPointOnCircle.getZ() - centerOfBase.getZ());
-
-        double height = Math.sqrt(Math.pow(firstPointOnCircle.getX() - centerOfBase.getX(), 2)
-                + Math.pow(firstPointOnCircle.getY() - centerOfBase.getY(), 2)
-                + Math.pow(firstPointOnCircle.getZ() - centerOfBase.getZ(), 2));
-
-        cylinderHeight = height;
-        double radius;
-
-        if (angleBetweenVectorsInUpperPlane == 0) {
-            radius = Math.sqrt(Math.pow(firstPointOnCircle.getX() - secondPointOnCircle.getX(), 2)
-                    + Math.pow(firstPointOnCircle.getY() - secondPointOnCircle.getY(), 2)
-                    + Math.pow(firstPointOnCircle.getZ() - secondPointOnCircle.getZ(), 2));
-            radiusOfBase = radius;
-
-            if (radius > 0 && height > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } else if (angleBetweenVectorsInLowerPlane == 0) {
-            radius = Math.sqrt(Math.pow(centerOfBase.getX() - secondPointOnCircle.getX(), 2) + Math.pow(centerOfBase.getY() - secondPointOnCircle.getY(), 2) + Math.pow(centerOfBase.getZ() - secondPointOnCircle.getZ(), 2));
-            radiusOfBase = radius;
-
-            if (radius > 0 && height > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+    @Override
+    public boolean isFigureValid() {
+        if (points.size() != Constants.THREE_COORDINATES) {
             return false;
         }
+
+        getPoints();
+        double radius = calculateLength(pointOnBaseCircle, baseCenter);
+        if (radius <= 0) {
+            return false;
+        }
+        double height = Math.abs(topCenter.getZ() - baseCenter.getZ());
+        return height > 0;
+    }
+    @Override
+    public double countingFigureArea() {
+        getPoints();
+        double radius = calculateLength(pointOnBaseCircle, baseCenter);
+        double height = calculateLength(topCenter, baseCenter);
+        return  2 * Math.PI * radius * (radius + height);
     }
 
-    public static double countingCylinderArea() {
-        return Constants.NUM_TWO_RADIUS_OF_CIRCLE * Math.PI * radiusOfBase * (cylinderHeight + radiusOfBase);
+    private void getPoints() {
+        baseCenter = points.get(Constants.FIRST_POINT_INDEX);
+        topCenter = points.get(Constants.SECOND_POINT_INDEX);
+        pointOnBaseCircle = points.get(Constants.THIRD_POINT_INDEX);
+    }
+
+    protected double calculateLength(Point pointA, Point pointB) {
+        int x = pointB.getX() - pointA.getX();
+        int y = pointB.getY() - pointA.getY();
+        int z = pointB.getZ() - pointA.getZ();
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
     }
 }

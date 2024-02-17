@@ -1,14 +1,17 @@
+import constants.Constants;
+
 import java.util.ArrayList;
 
 public class Square extends Figure {
 
-    private static ArrayList<Point> points;
+    private ArrayList<Point> points;
 
     public Square(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public static boolean isSquareValid() {
+    @Override
+    public boolean isFigureValid() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdpoint = points.get(Constants.THIRD_POINT_INDEX);
@@ -24,7 +27,8 @@ public class Square extends Figure {
         return isPerpendicular && AB == AD && AD == BC && BC == CD;
     }
 
-    public static double countingAreaOfSquare() {
+    @Override
+    public double countingFigureArea() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
 
@@ -34,7 +38,8 @@ public class Square extends Figure {
         return Math.pow(S, 2);
     }
 
-    public static double countingPerimeterOfSquare() {
+    @Override
+    public double countingFigurePerimeter() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
 
@@ -45,7 +50,8 @@ public class Square extends Figure {
     }
 
     static double distanceBetweenPoints(Point p, Point q) {
-        return Math.sqrt(Math.pow(p.getX() - q.getX(), 2) + Math.pow(p.getY() - q.getY(), 2) + Math.pow(p.getZ() - q.getZ(), 2));
+        return Math.sqrt(Math.pow(p.getX() - q.getX(), 2) + Math.pow(p.getY() - q.getY(), 2)
+                + Math.pow(p.getZ() - q.getZ(), 2));
     }
 
 }

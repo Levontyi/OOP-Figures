@@ -1,38 +1,51 @@
-import java.util.ArrayList;
-import java.util.concurrent.CompletionStage;
+import constants.Constants;
 
-public class Cone extends  Figure {
-    private static ArrayList<Point> points;
-    private static double radiusOfBaseOfCone;
-    private static double height;
+import java.util.ArrayList;
+
+public class Cone extends Figure {
+    private final ArrayList<Point> points;
+
+    private Point center;
+
+    private Point pointOnCircle;
+
+    private Point coneTop;
 
     public Cone(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public static boolean isConeValid() {
-        Point center = points.get(Constants.FIRST_POINT_INDEX);
-        Point pointOnBase = points.get(Constants.SECOND_POINT_INDEX);
-        Point topOfCone = points.get(Constants.THIRD_POINT_INDEX);
-
-        radiusOfBaseOfCone = Math.sqrt(Math.pow(pointOnBase.getX() - center.getX(), 2)
-                + Math.pow(pointOnBase.getY() - pointOnBase.getY(), 2) + Math.pow(pointOnBase.getZ() - center.getZ(), 2));
-        height = Math.sqrt(Math.pow(topOfCone.getX() - center.getX(), 2)
-                + Math.pow(topOfCone.getY() - center.getY(), 2) + Math.pow(topOfCone.getZ() - center.getZ(), 2));
-
-        int angleBetweenVectors = (pointOnBase.getX() - center.getX()) * (topOfCone.getX() - center.getX())
-                + (pointOnBase.getY() - pointOnBase.getY()) * (topOfCone.getY() - center.getY())
-                + (pointOnBase.getZ() - center.getZ()) * (topOfCone.getZ() - center.getZ());
-
-        if (angleBetweenVectors == 0 && radiusOfBaseOfCone > 0 && height > 0) {
-            return true;
-        } else {
+    @Override
+    public boolean isFigureValid() {
+        if (points.size() != Constants.THREE_COORDINATES) {
             return false;
         }
+        getPoints();
+        double radius = calculateLength(center, pointOnCircle);
+        double height = calculateLength(center, coneTop);
+
+        return radius > 0 && height > 0;
     }
 
-    public static double countingAreaOfCone() {
-        double lineOnSideOfCone = Math.sqrt(Math.pow(radiusOfBaseOfCone, 2) + Math.pow(height, 2));
-        return Math.PI * radiusOfBaseOfCone * (radiusOfBaseOfCone + lineOnSideOfCone);
+    @Override
+    public double countingFigureArea() {
+        getPoints();
+        double radius = calculateLength(pointOnCircle, center);
+        double height = calculateLength(coneTop, center);
+        double l = Math.sqrt(Math.pow(height, 2) + Math.pow(radius, 2));
+        return Math.PI * radius * (radius + l);
+    }
+
+    private void getPoints() {
+        center = points.get(Constants.FIRST_POINT_INDEX);
+        pointOnCircle = points.get(Constants.SECOND_POINT_INDEX);
+        coneTop = points.get(Constants.THIRD_POINT_INDEX);
+    }
+
+    protected double calculateLength(Point pointA, Point pointB) {
+        int x = pointB.getX() - pointA.getX();
+        int y = pointB.getY() - pointA.getY();
+        int z = pointB.getZ() - pointA.getZ();
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
     }
 }

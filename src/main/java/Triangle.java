@@ -1,54 +1,68 @@
+import constants.Constants;
+
 import java.util.ArrayList;
 
 public class Triangle extends Figure {
+    private final ArrayList<Point> points;
+    private double sideAB;
 
-    private static ArrayList<Point> points;
-    private static double lengthFirstSideOfTriangle;
-    private static double lengthSecondSideOfTriangle;
-    private static double lengthThirdSideOfTriangle;
+    private double sideBC;
+
+    private  double sideAC;
+
+    private Point pointA;
+
+    private Point pointB;
+
+    private Point pointC;
+
     public Triangle(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public static boolean isTriangleValid() {
-        Point firstPoint = points.get(0);
-        Point secondPoint = points.get(1);
-        Point thirdPoint = points.get(2);
-
-        lengthFirstSideOfTriangle = Math.sqrt(Math.pow(secondPoint.getX() - firstPoint.getX(), 2)
-                + Math.pow(secondPoint.getY() - firstPoint.getY(), 2) + Math.pow(secondPoint.getZ() - firstPoint.getZ(), 2));
-        lengthSecondSideOfTriangle = Math.sqrt(Math.pow(thirdPoint.getX() - firstPoint.getX(), 2)
-                + Math.pow(thirdPoint.getY() - firstPoint.getY(), 2) + Math.pow(thirdPoint.getZ() - firstPoint.getZ(), 2));
-        lengthThirdSideOfTriangle = Math.sqrt(Math.pow(thirdPoint.getX() - secondPoint.getX(), 2)
-                + Math.pow(thirdPoint.getY() - secondPoint.getY(), 2) + Math.pow(thirdPoint.getZ() - secondPoint.getZ(), 2));
-
-        int firstVectorX = secondPoint.getX() - firstPoint.getX();
-        int firstVectorY = secondPoint.getY() - firstPoint.getY();
-        int firstVectorZ = secondPoint.getZ() - firstPoint.getZ();
-
-        int secondVectorX = thirdPoint.getX() - firstPoint.getX();
-        int secondVectorY = thirdPoint.getY() - firstPoint.getY();
-        int secondVectorZ = thirdPoint.getZ() - firstPoint.getZ();
-
-        boolean vectorsNotCollinear = (firstVectorY * secondVectorZ - firstVectorZ * secondVectorY)
-                - (firstVectorX * secondVectorZ - firstVectorZ * secondVectorX)
-                - (firstVectorX * secondVectorY - firstVectorY * secondVectorX) != Constants.SCALAR_PRODUCT;
-
-        return  (lengthFirstSideOfTriangle + lengthSecondSideOfTriangle > lengthThirdSideOfTriangle)
-                && (lengthFirstSideOfTriangle + lengthThirdSideOfTriangle > lengthSecondSideOfTriangle)
-                && (lengthSecondSideOfTriangle + lengthThirdSideOfTriangle > lengthFirstSideOfTriangle)
-                && vectorsNotCollinear;
+    @Override
+    public boolean isFigureValid() {
+        if (points.size() == Constants.THREE_COORDINATES) {
+            getPoints();
+            return (pointB.getX() - pointA.getX())
+                    * (pointC.getY() - pointA.getY())
+                    - (pointC.getX() - pointA.getX())
+                    * (pointB.getY() - pointA.getY()) != 0;
+        }
+        return false;
     }
 
-    public static double countingAreaOfTriangle() {
-        double halfOfPerimeter = (lengthFirstSideOfTriangle + lengthSecondSideOfTriangle + lengthThirdSideOfTriangle) / 2;
-
-        return Math.sqrt(halfOfPerimeter * (halfOfPerimeter - lengthFirstSideOfTriangle)
-                * (halfOfPerimeter - lengthSecondSideOfTriangle)
-                * (halfOfPerimeter - lengthThirdSideOfTriangle));
+    @Override
+    public double countingFigureArea() {
+        getPoints();
+        calculateSides();
+        double halfPer = countingFigurePerimeter() / 2;
+        return Math.sqrt(halfPer * (halfPer - sideAB) * (halfPer - sideBC) * (halfPer - sideAC));
     }
 
-    public static double countingPerimeterOfTriangle() {
-        return lengthFirstSideOfTriangle + lengthSecondSideOfTriangle + lengthThirdSideOfTriangle;
+    @Override
+    public double countingFigurePerimeter() {
+        getPoints();
+        calculateSides();
+        return sideAB + sideBC + sideAC;
+    }
+
+    private void calculateSides() {
+        sideAB = calculateLength(pointA, pointB);
+        sideBC = calculateLength(pointB, pointC);
+        sideAC = calculateLength(pointA, pointC);
+    }
+
+    private void getPoints() {
+        pointA = points.get(Constants.FIRST_POINT_INDEX);
+        pointB = points.get(Constants.SECOND_POINT_INDEX);
+        pointC = points.get(Constants.THIRD_POINT_INDEX);
+    }
+
+    protected double calculateLength(Point pointA, Point pointB) {
+        int x = pointB.getX() - pointA.getX();
+        int y = pointB.getY() - pointA.getY();
+        int z = pointB.getZ() - pointA.getZ();
+        return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
     }
 }

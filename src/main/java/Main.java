@@ -1,137 +1,93 @@
+import constants.Constants;
+import enums.NameOfFigures;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-
-    static String chosenFigure = null;
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        enteringFigure(scanner);
-        ArrayList<Point> points = enteringCoordinates(scanner);
-        creatingFigure(chosenFigure, points);
-
-        if (Figure.checkingIsFigureValid(chosenFigure)) {
-            Figure.countingAreaOfFigure(chosenFigure);
-            Figure.countingPerimeterOfFigure(chosenFigure);
-        }
-    }
-
-    public static void enteringFigure(Scanner scanner) {
-        String nameOfFigure = scanner.nextLine();
-        NameOfFigures nameOfFigures = NameOfFigures.valueOf(nameOfFigure);
-
-        if (nameOfFigure.equals("END")) {
-            System.exit(0);
+        String command = inputCommand(scanner);
+        if (command.equals("END")) {
+            System.out.println("Input is finished");
         } else {
-            switch (nameOfFigures) {
-                case CONE:
-                    chosenFigure = "CONE";
-                    break;
-                case CIRCLE:
-                    chosenFigure = "CIRCLE";
-                    break;
-                case SPHERE:
-                    chosenFigure = "SPHERE";
-                    break;
-                case SQUARE:
-                    chosenFigure = "SQUARE";
-                    break;
-                case CYLINDER:
-                    chosenFigure = "CYLINDER";
-                    break;
-                case TRIANGLE:
-                    chosenFigure = "TRIANGLE";
-                    break;
-                case RECTANGLE:
-                    chosenFigure = "RECTANGLE";
-                    break;
-                case FIGURE:
-                    chosenFigure = "FIGURE";
-                    break;
-                case PARALLELOGRAM:
-                    chosenFigure = "PARALLELOGRAM";
-                    break;
-                case TRUNCATED_SPHERE:
-                    chosenFigure = "TRUNCATED_SPHERE";
-                    break;
-                case POLYGON:
-                    chosenFigure = "POLYGON";
-                    break;
-            }
+            ArrayList<Point> points = inputCoordinates(scanner);
+            Figure figure = createFigure(command, points);
 
+            if (figure.isFigureValid()) {
+                figure.printArea(figure.countingFigureArea());
+                figure.printPerimeter(figure.countingFigurePerimeter());
+            } else {
+                System.out.println("Invalid figure");
+            }
         }
     }
 
-    public static ArrayList<Point> enteringCoordinates(Scanner scanner) {
-        ArrayList<Point> point = new ArrayList<>();
+    public static boolean isValidFigure(String command) {
+        for (NameOfFigures type : NameOfFigures.values()) {
+            if (type.name().equals(command)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static String inputCommand(Scanner scanner) {
+        System.out.println("Enter figure type: ");
+        String inputLine = scanner.nextLine();
+        if (inputLine.equals("END")) {
+            return inputLine;
+        }
+        while (!isValidFigure(inputLine)) {
+            System.out.println("Please, retype");
+            inputLine = scanner.nextLine();
+        }
+        return inputLine;
+    }
+
+    public static Figure createFigure(String command, ArrayList<Point> points) {
+        NameOfFigures typeOfFigure = NameOfFigures.valueOf(command);
+        return switch (typeOfFigure) {
+            case CIRCLE -> new Circle(points);
+            case SQUARE -> new Square(points);
+            case RECTANGLE -> new Rectangle(points);
+            case PARALLELOGRAM -> new Parallelogram(points);
+            case TRIANGLE -> new Triangle(points);
+            case POLYGON -> new Polygon(points);
+            case SPHERE -> new Sphere(points);
+            case TRUNCATED_SPHERE -> new TruncatedSphere(points);
+            case CYLINDER -> new Cylinder(points);
+            case CONE -> new Cone(points);
+            default -> new Figure();
+        };
+    }
+
+    public static ArrayList<Point> inputCoordinates(Scanner scanner) {
+        ArrayList<Point> points = new ArrayList<>();
+        System.out.println("Enter points for figure: ");
 
         while (true) {
-            String coordinatesOfFigure = scanner.nextLine();
-            if (coordinatesOfFigure.equals("STOP_INPUT")) {
-                break;
-            }
-
-            String[] coordinates = coordinatesOfFigure.split(" ");
             try {
-                Integer.parseInt(coordinates[0]);
-                Integer.parseInt(coordinates[1]);
-                if (coordinates.length == 3) {
-                    Integer.parseInt(coordinates[2]);
+                String[] coordinates = scanner.nextLine().split(" ");
+                if (coordinates.length == Constants.TWO_COORDINATES) {
+                    int x = Integer.parseInt(coordinates[0]);
+                    int y = Integer.parseInt(coordinates[1]);
+                    points.add(new Point(x, y));
+                } else if (coordinates.length == Constants.THREE_COORDINATES) {
+                    int x = Integer.parseInt(coordinates[0]);
+                    int y = Integer.parseInt(coordinates[1]);
+                    int z = Integer.parseInt(coordinates[2]);
+                    points.add(new Point(x, y, z));
+                } else if (coordinates[0].equals("STOP_INPUT")) {
+                    break;
+                } else {
+                    throw new NumberFormatException();
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please, retype");
-                continue;
-            }
-
-            int coordinateX = Integer.parseInt(coordinates[0]);
-            int coordinateY = Integer.parseInt(coordinates[1]);
-            int coordinateZ = 0;
-
-            if (coordinates.length == 3) {
-                coordinateZ = Integer.parseInt(coordinates[2]);
-            }
-
-            point.add(new Point(coordinateX, coordinateY, coordinateZ));
-        }
-
-        return point;
-    }
-
-    public static void creatingFigure(String nameOfFigure, ArrayList<Point> points) {
-        NameOfFigures nameOfFigures = NameOfFigures.valueOf(nameOfFigure);
-
-        for (int i = 0; i < points.size(); i++) {
-            switch (nameOfFigures) {
-                case CONE:
-                    new Cone(points);
-                    break;
-                case CIRCLE:
-                    new Circle(points);
-                    break;
-                case SPHERE:
-                    new Sphere(points);
-                    break;
-                case SQUARE:
-                    new Square(points);
-                    break;
-                case CYLINDER:
-                    new Cylinder(points);
-                    break;
-                case TRIANGLE:
-                    new Triangle(points);
-                    break;
-                case RECTANGLE:
-                    new Rectangle(points);
-                    break;
-                case PARALLELOGRAM:
-                    new Parallelogram(points);
-                    break;
-                case TRUNCATED_SPHERE:
-                    new TruncatedSphere(points);
-                    break;
             }
         }
+        return points;
     }
 }

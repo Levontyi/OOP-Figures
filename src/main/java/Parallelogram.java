@@ -1,14 +1,16 @@
+import constants.Constants;
+
 import java.util.ArrayList;
 
 public class Parallelogram extends Figure {
 
-    private static ArrayList<Point> points;
+    private ArrayList<Point> points;
 
     public Parallelogram(ArrayList<Point> points) {
         this.points = points;
     }
 
-    public static boolean isParallelogramValid() {
+    public boolean isFigureValid() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
@@ -32,7 +34,7 @@ public class Parallelogram extends Figure {
         }
     }
 
-    public static double countingParallelogramArea() {
+    public double countingFigureArea() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
@@ -63,7 +65,7 @@ public class Parallelogram extends Figure {
 
     }
 
-    public static double countingParallelogramPerimeter() {
+    public double countingFigurePerimeter() {
         Point firstPoint = points.get(Constants.FIRST_POINT_INDEX);
         Point secondPoint = points.get(Constants.SECOND_POINT_INDEX);
         Point thirdPoint = points.get(Constants.THIRD_POINT_INDEX);
